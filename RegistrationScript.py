@@ -20,10 +20,11 @@ for rowOfCellObjects in crnTuple:
         crnList.append(cellObj.value)
 
 # print codes acquired to user
+print("The courses with the following CRN codes will be added")
 for code in crnList:
-    print(code)
+    print("\t" + str(code))
 
-wb.close()  # close the wb
+wb.close()  # close the workbook
 
 # Fill out the form for the user and submit
 url = "https://bannerweb.miamioh.edu/ban8ssb/bwskfreg.P_AltPin"
@@ -40,12 +41,14 @@ br.form['sid'] = uid
 br.form['PIN'] = password
 br.submit()
 
+print("Signed in as: ", uid, "\n")
+
 # navigate to the registration page
 br.open('https://bannerweb.miamioh.edu/ban8ssb/bwskfreg.P_AltPin')
+
 br.select_form(nr=1)
 
-
-br.form['term_in'] = ['202015']  # enter in the term number here
+br.form['term_in'] = ['202010']  # enter in the term number here ---------------------
 br.submit()
 
 br.select_form(nr=1)
@@ -56,7 +59,7 @@ for code in crnList:
     cid_int = int(cid)  # convert ID tag to int
     # ensure it is a valid id tag
     if 1 <= cid_int <= 10:
-        print("Attempting to Add: ", crnList[(cid_int-1)])
+        print("Adding: ", crnList[(cid_int-1)])
         to_add = br.form.find_control(name='CRN_IN', id='crn_id' + str(cid_int))
         to_add.value = str(crnList[(cid_int-1)])
     cid = cid + 1
@@ -65,3 +68,25 @@ for code in crnList:
 br.submit()  # submit the form
 
 print("submitted")
+
+
+forms = list(br.forms())  # convert all forms to a list
+
+course = ""  # empty string to print with
+print("\n----Displaying added courses----")
+print("\tCRN\t\tSUBJ\tCRSE\tSEC")
+for key, value in forms[1]._pairs():
+    if value == "DUMMY":
+        # ignore the dummy variables
+        continue
+    if key == "CRN_IN":
+        course += value
+    if key == "SUBJ":
+        course += "\t" + value
+    if key == 'CRSE':
+        course += "\t\t" + value
+    if key == 'SEC':
+        course += "\t\t" + value
+        print("\t" + course)
+        course = ""
+
