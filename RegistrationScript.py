@@ -1,3 +1,4 @@
+import datetime
 import openpyxl
 import mechanize
 import os
@@ -26,6 +27,22 @@ for code in crnList:
 
 wb.close()  # close the workbook
 
+
+desiredTime = "20:00:00"  # Time to begin registration at
+
+# Loop until time to begin
+while True:
+    now = datetime.datetime.now()  # get the current system time
+    desTime = datetime.datetime.strptime(desiredTime, "%H:%M:%S")
+    desTime = now.replace(hour=desTime.time().hour, minute=desTime.time().minute,
+                          second=desTime.time().second, microsecond=0)
+    if now > desTime:
+        break
+
+
+# Begin registration process now that it is the specified time
+
+
 # Fill out the form for the user and submit
 url = "https://bannerweb.miamioh.edu/ban8ssb/bwskfreg.P_AltPin"
 br = mechanize.Browser()
@@ -53,21 +70,21 @@ br.submit()
 
 br.select_form(nr=1)
 
-# add info to the slots
-cid = 1
-for code in crnList:
-    cid_int = int(cid)  # convert ID tag to int
-    # ensure it is a valid id tag
-    if 1 <= cid_int <= 10:
-        print("Adding: ", crnList[(cid_int-1)])
-        to_add = br.form.find_control(name='CRN_IN', id='crn_id' + str(cid_int))
-        to_add.value = str(crnList[(cid_int-1)])
-    cid = cid + 1
-
-
-br.submit()  # submit the form
-
-print("submitted")
+# # add info to the slots
+# cid = 1
+# for code in crnList:
+#     cid_int = int(cid)  # convert ID tag to int
+#     # ensure it is a valid id tag
+#     if 1 <= cid_int <= 10:
+#         print("Adding: ", crnList[(cid_int-1)])
+#         to_add = br.form.find_control(name='CRN_IN', id='crn_id' + str(cid_int))
+#         to_add.value = str(crnList[(cid_int-1)])
+#     cid = cid + 1
+#
+#
+# br.submit()  # submit the form
+#
+# print("submitted")
 
 
 forms = list(br.forms())  # convert all forms to a list
