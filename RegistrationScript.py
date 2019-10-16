@@ -70,21 +70,21 @@ br.submit()
 
 br.select_form(nr=1)
 
-# # add info to the slots
-# cid = 1
-# for code in crnList:
-#     cid_int = int(cid)  # convert ID tag to int
-#     # ensure it is a valid id tag
-#     if 1 <= cid_int <= 10:
-#         print("Adding: ", crnList[(cid_int-1)])
-#         to_add = br.form.find_control(name='CRN_IN', id='crn_id' + str(cid_int))
-#         to_add.value = str(crnList[(cid_int-1)])
-#     cid = cid + 1
-#
-#
-# br.submit()  # submit the form
-#
-# print("submitted")
+# add info to the slots
+cid = 1
+for code in crnList:
+    cid_int = int(cid)  # convert ID tag to int
+    # ensure it is a valid id tag
+    if 1 <= cid_int <= 10:
+        print("Adding: ", crnList[(cid_int-1)])
+        to_add = br.form.find_control(name='CRN_IN', id='crn_id' + str(cid_int))
+        to_add.value = str(crnList[(cid_int-1)])
+    cid = cid + 1
+
+
+br.submit()  # submit the form
+
+print("submitted")
 
 
 forms = list(br.forms())  # convert all forms to a list
