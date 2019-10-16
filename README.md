@@ -12,4 +12,6 @@ Steps For Use:
   
   4.) Enter the term's value into the appropriately commented line in the code
   
+  5.) Enter the time registration begins into the appropriately commented line in the code
+  
   5.) Run the code through an IDE or terminal and enjoy a stress free registration
