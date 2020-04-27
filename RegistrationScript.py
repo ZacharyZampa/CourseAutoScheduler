@@ -4,14 +4,14 @@ import mechanize
 import os
 
 # Process the CRN codes from a supplied worksheet
-os.chdir("C:\\Users\\zackz\\Documents\\School")  # change working directory to where spreadsheet is
+os.chdir("C:\\Users\\zampaze\\Documents\\School")  # change working directory to where spreadsheet is
 wb = openpyxl.load_workbook('ClassPlan.xlsx')  # load in the workbook
 sheet = wb['Original']  # choose the worksheet
 
 # Access the cells holding the CRNs
-crnTuple = tuple(sheet['E34':'E37'])
-uid = sheet['B40'].value
-password = sheet['B41'].value
+crnTuple = tuple(sheet['E34':'E39'])
+uid = sheet['B41'].value
+password = sheet['B42'].value
 
 
 crnList = []
@@ -25,10 +25,12 @@ print("The courses with the following CRN codes will be added")
 for code in crnList:
     print("\t" + str(code))
 
+print("Signing in with: ", uid, " and password: ", password)
+
 wb.close()  # close the workbook
 
 
-desiredTime = "20:00:00"  # Time to begin registration at
+desiredTime = "07:00:01"  # Time to begin registration at
 
 # Loop until time to begin
 while True:
@@ -65,7 +67,7 @@ br.open('https://bannerweb.miamioh.edu/ban8ssb/bwskfreg.P_AltPin')
 
 br.select_form(nr=1)
 
-br.form['term_in'] = ['202010']  # enter in the term number here ---------------------
+br.form['term_in'] = ['202110']  # enter in the term number here ---------------------
 br.submit()
 
 br.select_form(nr=1)
